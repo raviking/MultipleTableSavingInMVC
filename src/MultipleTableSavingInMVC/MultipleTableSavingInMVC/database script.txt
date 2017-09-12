@@ -1,0 +1,36 @@
+
+CREATE TABLE [dbo].[TUser] (
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [Name]        NVARCHAR (50) NOT NULL,
+    [Email]       NVARCHAR (50) NOT NULL,
+    [PhoneNumber] BIGINT        NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[TOrders] (
+    [OrderId]     INT           IDENTITY (1, 1) NOT NULL,
+    [ItemName]    NVARCHAR (50) NOT NULL,
+    [PaymentType] NVARCHAR (50) NOT NULL,
+    [Price]       BIGINT        NOT NULL,
+    [Userid]      BIGINT        NOT NULL,
+    PRIMARY KEY CLUSTERED ([OrderId] ASC)
+);
+
+CREATE TABLE [dbo].[TAddress] (
+    [AddressId] BIGINT        IDENTITY (1, 1) NOT NULL,
+    [Colony]    NVARCHAR (50) NOT NULL,
+    [State]     NVARCHAR (50) NOT NULL,
+    [Country]   NVARCHAR (50) NOT NULL,
+    [Userid]    BIGINT        NOT NULL,
+    PRIMARY KEY CLUSTERED ([AddressId] ASC)
+);
+
+CREATE PROCEDURE [dbo].[sp_InsertUser]
+	@Name nvarchar(225) = null,
+	@Email nvarchar(225) = null,
+	@PhoneNumber Bigint=0
+AS
+BEGIN
+	INSERT INTO TUser(Name,Email,PhoneNumber) VALUES(@Name,@Email,@PhoneNumber)
+	SELECT SCOPE_IDENTITY() AS Userid
+END
